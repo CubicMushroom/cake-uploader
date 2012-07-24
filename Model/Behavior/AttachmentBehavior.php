@@ -61,6 +61,7 @@ class AttachmentBehavior extends ModelBehavior {
 	 */
 	protected $_defaults = array(
 		'name' => '',
+		'folder' => '',
 		'baseDir' => '',
 		'uploadDir' => '',
 		'append' => '',
@@ -195,6 +196,11 @@ class AttachmentBehavior extends ModelBehavior {
 			// Save model method for formatting function
 			if (!empty($attachment['name']) && method_exists($model, $attachment['name'])) {
 				$attachment['name'] = array($model, $attachment['name']);
+			}
+
+			// Save model method for folder name function
+			if (!empty($attachment['prepend']) && method_exists($model, $attachment['prepend'])) {
+				$attachment['prepend'] = call_user_func(array($model, $attachment['prepend']));
 			}
 
 			// Setup instances
